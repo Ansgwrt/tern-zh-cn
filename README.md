@@ -7,9 +7,13 @@
 
 适用版本：**Tern 0.9.29**（Windows x64 / macOS 实测 DOM 一致）。插件版本 **0.7.0**。
 
-![设置面板中文导航](docs/localization-prefs-general.png)
+![设置面板中文导航](docs/localization-prefs-appearance.png)
 
 ![命令面板中文命令](docs/localization-palette.png)
+
+![键盘页中文条目](docs/localization-prefs-keyboard.png)
+
+![顶栏右键菜单中文](docs/localization-menu-tab.png)
 
 ---
 

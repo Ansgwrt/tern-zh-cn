@@ -17,7 +17,7 @@
 
 验证：独立窗口 `tern ctl css` 显示 `plugin:local:zh-cn:styles` 已加载 394 条规则；`tern ctl dump` 证明伪元素真的渲染了中文（宽度从英文宽度变成 2 字 25.92px / 3 字 38.88px）；命令面板里 240 条中文行全部可见。
 
-截图：`docs/localization-prefs.png`、`docs/localization-palette.png`、`docs/localization-files-empty.png`。
+截图：`docs/localization-prefs-appearance.png`、`docs/localization-prefs-keyboard.png`、`docs/localization-palette.png`、`docs/localization-menu-tab.png`、`docs/localization-files-empty.png`。
 
 ---
 
