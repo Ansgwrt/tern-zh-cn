@@ -1184,7 +1184,9 @@ h1.pf-title, .pf-sec-t, .pf-lbl > .t, .pf-lbl > .h, .pf-seg > button, .pf-ctl .b
 """)
 
 css = "".join(out)
-open("tern-work/prefs-body.css", "w", encoding="utf-8").write(css)
+import os
+_out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "prefs-body.css")
+open(_out, "w", encoding="utf-8").write(css)
 print("keys:", len(keys), " bytes:", len(css.encode("utf-8")),
       " has-rules:", css.count(".pf.sheet:has("))
 

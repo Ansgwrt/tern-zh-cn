@@ -1,4 +1,4 @@
-import io
+import io, os
 
 scope = ".pop.ctx:has(.kbds > .kbd:nth-of-type(4))"
 
@@ -41,6 +41,7 @@ for sel, _ in items:
     out.append("%s %s > .sub { order: 3; }\n" % (scope, sel))
 
 css = "".join(out)
-io.open(r"C:\Users\Sumi\AppData\Roaming\Tern\plugins\zh-cn\zh-cn-menus.css", "w", encoding="utf-8").write(css)
+_out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "zh-cn-menus.css")
+io.open(_out, "w", encoding="utf-8").write(css)
 print("rules:", css.count("{"), "bytes:", len(css.encode("utf-8")))
 print(css[:400])

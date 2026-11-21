@@ -2,9 +2,11 @@
 """生成键盘页的中文表 kb_rows.py：
    有动作 id 的行复用 window.luau 里的中文命令名；其余（编辑器、SQLite、热键等）用下面的手写表。
 """
-import io, json, re
+import io, json, os, re, sys
 
-luau = io.open(r"C:\Users\Sumi\AppData\Roaming\Tern\plugins\zh-cn\window.luau", encoding="utf-8").read()
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+luau = io.open(os.path.join(ROOT, "window.luau"), encoding="utf-8").read()
 zh = dict(re.findall(r'\{\s*"([^"]+)",\s*"([^"]+)"', luau))
 
 # (节, div) -> (标签中文, 说明中文或 None 表示保留原 id)
@@ -120,7 +122,10 @@ MANUAL = {
     (10, 27): ("重置 pragma 修改", "在 SQLite 块里。· sqlite.pragmas.reset"),
 }
 
-kb = json.load(io.open(r"C:\Users\Sumi\Documents\deepseek-harness\default-workspace\tern-work\kb.json", encoding="utf-8"))["keyboard"]
+if len(sys.argv) < 2:
+    raise SystemExit("用法: python tools/kb_build.py <keyboard-page-dump.json> [输出路径]\n"
+                     "dump 由 `tern ctl tree` 导出（设置 › 键盘 页）")
+kb = json.load(io.open(sys.argv[1], encoding="utf-8"))["keyboard"]
 rows = []
 unresolved = []
 for sec in kb:
@@ -148,5 +153,6 @@ lines = ["# -*- coding: utf-8 -*-", "# 键盘页正文（由 kb_build.py 从动�
 for s, d, kind, text in rows:
     lines.append('    (%d, %d, "%s", "%s"),' % (s, d, kind, text))
 lines.append("]")
-io.open(r"C:\Users\Sumi\Documents\deepseek-harness\default-workspace\kb_rows.py", "w", encoding="utf-8").write("\n".join(lines))
+out_path = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "kb_rows.py")
+io.open(out_path, "w", encoding="utf-8").write("\n".join(lines))
 print("wrote kb_rows.py", len(rows), "rows")
