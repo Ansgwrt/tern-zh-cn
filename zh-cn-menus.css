@@ -1,0 +1,38 @@
+/* ══ 顶栏（标签页）右键菜单 ═══════════════════════════════════════
+ * 菜单项只有 class="mi" / "mi-row" 和文本，没有任何可区分属性；
+ * 同一个 .pop.ctx 容器服务面板菜单、页签菜单、PiP 菜单、文件菜单。
+ * 因此只用「结构特征」定位，不按纯位置硬套：
+ *   · 菜单里存在 4 个按键芯片的项（重命名标签页… Ctrl+Alt+Shift+T）→ 判定为标签页菜单
+ *   · 颜色行带 .tn-tc-sws 色板；vCPU / RAM 行带 .sld 滑块，且 vCPU 紧跟分隔线、两行相邻
+ *   · 首两项与末两项位置固定
+ * 仍无法安全翻译：复制会话链接、把标签页移到窗口…（它们是否出现会改变位置，硬套会错标）。
+ *
+ * 注入方式：font-size:0 只隐藏 .mi 的直接文本，按键芯片在自己的 .kbd 里保留；
+ *   ::after 的内容用 flex 的 order 排到图标之后、芯片之前（order 实测可用）。
+ */
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-of-type(1) { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-of-type(2) { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > .mi-row:has(.tn-tc-sws) { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > div.sep + .mi-row:has(.sld) { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > .mi-row:has(.sld) + .mi-row:has(.sld) { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > div.sep + button.mi:not(:last-of-type):not(:nth-last-of-type(2)) { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-last-of-type(2) { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:last-of-type { font-size: 0; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-of-type(1)::after { content: "重命名标签页…"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-of-type(2)::after { content: "整理标签页标题"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > .mi-row:has(.tn-tc-sws)::after { content: "颜色"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > div.sep + .mi-row:has(.sld)::after { content: "虚拟 CPU"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > .mi-row:has(.sld) + .mi-row:has(.sld)::after { content: "内存"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > div.sep + button.mi:not(:last-of-type):not(:nth-last-of-type(2))::after { content: "新建标签页"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-last-of-type(2)::after { content: "锁定会话"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:last-of-type::after { content: "关闭标签页"; font-size: 13px; font-weight: 400; color: inherit; letter-spacing: 0; order: 1; }
+
+/* 芯片排到文字右侧 */
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-of-type(1) > .sub { order: 3; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-of-type(2) > .sub { order: 3; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > .mi-row:has(.tn-tc-sws) > .sub { order: 3; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > div.sep + .mi-row:has(.sld) > .sub { order: 3; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > .mi-row:has(.sld) + .mi-row:has(.sld) > .sub { order: 3; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > div.sep + button.mi:not(:last-of-type):not(:nth-last-of-type(2)) > .sub { order: 3; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:nth-last-of-type(2) > .sub { order: 3; }
+.pop.ctx:has(.kbds > .kbd:nth-of-type(4)) > button.mi:last-of-type > .sub { order: 3; }
